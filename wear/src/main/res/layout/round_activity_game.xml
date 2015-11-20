@@ -6,37 +6,96 @@
     tools:context="zhou.allen.swiper.GameActivity"
     tools:deviceIds="wear_round">
 
+    <android.support.wearable.view.DismissOverlayView
+        android:id="@+id/dismiss_overlay"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
     <ImageView
-        android:layout_width="500dp"
-        android:layout_height="500dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/upBack"
+        android:background="@drawable/up"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:visibility="invisible"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="100dp"
+        android:alpha="0.7" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/downBack"
+        android:background="@drawable/down"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:visibility="invisible"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="100dp"
+        android:alpha="0.7" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/leftBack"
+        android:background="@drawable/left"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:visibility="invisible"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="100dp"
+        android:alpha="0.7" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/rightBack"
+        android:background="@drawable/right"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:visibility="invisible"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="100dp"
+        android:alpha="0.7" />
+
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:id="@+id/upFront"
         android:background="@drawable/up"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"/>
     <ImageView
-        android:layout_width="500dp"
-        android:layout_height="500dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:id="@+id/downFront"
         android:background="@drawable/down"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"/>
     <ImageView
-        android:layout_width="500dp"
-        android:layout_height="500dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:id="@+id/leftFront"
         android:background="@drawable/left"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"/>
     <ImageView
-        android:layout_width="500dp"
-        android:layout_height="500dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:id="@+id/rightFront"
         android:background="@drawable/right"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scoreText"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:text="0"
+        android:textSize="35sp"/>
 </RelativeLayout>
