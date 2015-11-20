@@ -3,11 +3,11 @@ package zhou.allen.swiper;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GameActivity extends Activity {
-
-    private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,8 @@ public class GameActivity extends Activity {
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mTextView = (TextView) stub.findViewById(R.id.text);
+                ImageView upButton = (ImageView) stub.findViewById(R.id.upFront);
+                upButton.setVisibility(View.VISIBLE);
             }
         });
     }

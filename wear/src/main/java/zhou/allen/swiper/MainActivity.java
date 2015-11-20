@@ -1,5 +1,18 @@
 package zhou.allen.swiper;
 
+/**
+ * -layout
+ * TODO: -Make better image buttons
+ * TODO: -Fix image view and theme
+ * TODO: -Add main activity stuff
+ *
+ * -mechanics
+ * TODO: -Swiping, Taps, Gestures, Motions
+ *
+ * -Easter egg
+ * -Add themes
+ */
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.wearable.view.WatchViewStub;

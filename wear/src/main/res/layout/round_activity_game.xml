@@ -6,11 +6,37 @@
     tools:context="zhou.allen.swiper.GameActivity"
     tools:deviceIds="wear_round">
 
-    <TextView
-        android:id="@+id/text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:id="@+id/upFront"
+        android:background="@drawable/up"
         android:layout_centerVertical="true"
-        android:text="@string/hello_round" />
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:id="@+id/downFront"
+        android:background="@drawable/down"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:id="@+id/leftFront"
+        android:background="@drawable/left"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+    <ImageView
+        android:layout_width="500dp"
+        android:layout_height="500dp"
+        android:id="@+id/rightFront"
+        android:background="@drawable/right"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+
 </RelativeLayout>
