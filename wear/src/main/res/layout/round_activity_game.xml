@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="zhou.allen.swiper.GameActivity"
-    tools:deviceIds="wear_round">
+    tools:deviceIds="wear_round"
+    android:background="#f9f9f9">
 
     <android.support.wearable.view.DismissOverlayView
         android:id="@+id/dismiss_overlay"
@@ -55,6 +56,17 @@
         android:layout_marginBottom="100dp"
         android:layout_marginLeft="100dp"
         android:alpha="0.7" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/tapBack"
+        android:background="@drawable/tap"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:visibility="invisible"
+        android:layout_marginBottom="100dp"
+        android:layout_marginLeft="100dp"
+        android:alpha="0.7" />
 
 
     <ImageView
@@ -89,6 +101,14 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         android:visibility="invisible"/>
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/tapFront"
+        android:background="@drawable/tap"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -97,5 +117,6 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:text="0"
-        android:textSize="35sp"/>
+        android:textSize="35sp"
+        android:textColor="#000000"/>
 </RelativeLayout>

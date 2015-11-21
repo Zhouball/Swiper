@@ -1,10 +1,13 @@
 package zhou.allen.swiper;
 
 /**
+ *
  * -layout
- * TODO: -Make better image buttons
  * TODO: -Fix image view and theme
  * TODO: -Add main activity stuff
+ *
+ * -base-game
+ * TODO: Get the different moves to cycle (make a random list of each swipe, if correct swipe detected, move to next command)
  *
  * -mechanics
  * TODO: -Swiping, Taps, Gestures, Motions
