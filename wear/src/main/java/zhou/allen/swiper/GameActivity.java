@@ -2,10 +2,10 @@ package zhou.allen.swiper;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.view.MotionEventCompat;
 import android.support.wearable.view.DismissOverlayView;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
+import android.util.Pair;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,10 +20,9 @@ public class GameActivity extends Activity {
     private String DEBUG_TAG = "Motion";
 
     TextView scoreText;
-    Integer score = 0, currEvent = -1, nextEvent = -1;
     ImageView currIcon, nextIcon;
     WatchViewStub stub;
-    final int numEvents = 5;
+    Gamemode gamemode;
 
     private DismissOverlayView mDismissOverlay;
     private GestureDetector mDetector;
@@ -33,24 +32,8 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        currEvent = (int) (Math.random()*numEvents);
-        nextEvent = (int) (Math.random()*numEvents);
-
-        stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
-        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
-            @Override
-            public void onLayoutInflated(WatchViewStub stub) {
-                scoreText = (TextView) stub.findViewById(R.id.scoreText);
-                currIcon = showCurrIcon(currEvent, stub);
-                nextIcon = showNextIcon(nextEvent, stub);
-
-                // Obtain the DismissOverlayView element
-                mDismissOverlay = (DismissOverlayView) stub.findViewById(R.id.dismiss_overlay);
-                mDismissOverlay.setIntroText("Long Press to close");
-                mDismissOverlay.showIntroIfNecessary();
-            }
-        });
-
+        gamemode = Gamemode.SURVIVAL; //SET Gamemode in SharedPreferences
+        final Game game = new Game(this, gamemode);
 
         // Configure a gesture detector
         mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
@@ -71,35 +54,31 @@ public class GameActivity extends Activity {
                 Log.d(DEBUG_TAG, " onFling: " + velocityX + ", " + velocityY);
                 velocityX = Math.abs(velocityX);
                 velocityY = Math.abs(velocityY);
+                GameGesture g;
                 //LR swipe
                 if(velocityX > velocityY) {
-                    if(event1.getX() > event2.getX()) {
+                    if(event1.getX() >= event2.getX()) {
                         Log.d(DEBUG_TAG, "Left Swipe");
-                        if(currEvent == 3) {
-                            update();
-                        }
+                        g = GameGesture.LEFT;
                     } else {
                         Log.d(DEBUG_TAG, "Right Swipe");
-                        if(currEvent == 1) {
-                            update();
-                        }
+                        g = GameGesture.RIGHT;
                     }
                 }
                 //UD swipe
-                else if(velocityY > velocityX) {
+                //else if(velocityY > velocityX) {
+                else {
                     if(event1.getY() > event2.getY()) {
                         Log.d(DEBUG_TAG, "Up Swipe");
-                        if(currEvent == 0) {
-                            update();
-                        }
+                        g = GameGesture.UP;
                     } else {
                         Log.d(DEBUG_TAG, "Down Swipe");
-                        if(currEvent == 2) {
-                            update();
-                        }
+                        g = GameGesture.DOWN;
                     }
                 }
-                return true;
+                update(game.input(g), game.getScore());
+                return true; //When does this return false?
+                //return true;
             }
 
             @Override
@@ -115,9 +94,7 @@ public class GameActivity extends Activity {
             @Override
             public boolean onSingleTapUp(MotionEvent event) {
                 Log.d(DEBUG_TAG, " onSingleTapUp: " + event.toString());
-                if(currEvent == 4) {
-                    update();
-                }
+                update(game.input(GameGesture.TAP), game.getScore());
                 return true;
             }
 
@@ -139,6 +116,23 @@ public class GameActivity extends Activity {
                 return true;
             }
         });
+
+        stub = (WatchViewStub) findViewById(R.id.watch_view_stub);
+        stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
+            @Override
+            public void onLayoutInflated(WatchViewStub stub) {
+                scoreText = (TextView) stub.findViewById(R.id.scoreText);
+
+                // Obtain the DismissOverlayView element
+                mDismissOverlay = (DismissOverlayView) stub.findViewById(R.id.dismiss_overlay);
+                mDismissOverlay.setIntroText("Long Press to close");
+                mDismissOverlay.showIntroIfNecessary();
+            }
+        });
+
+        //Start the game
+        Pair<GameGesture, GameGesture> startPair = game.start();
+        update(startPair, game.getScore());
     }
 
     @Override
@@ -146,65 +140,73 @@ public class GameActivity extends Activity {
         return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
     }
 
-    private ImageView showCurrIcon(int curr, View v) {
+    private ImageView showCurrIcon(GameGesture curr, View v) {
         ImageView currIcon = (ImageView) v.findViewById(R.id.upFront);
-        if(curr >= 0 && curr < numEvents) {
-            switch (curr) {
-                case 0:
-                    currIcon = (ImageView) v.findViewById(R.id.upFront);
-                    break;
-                case 1:
-                    currIcon = (ImageView) v.findViewById(R.id.rightFront);
-                    break;
-                case 2:
-                    currIcon = (ImageView) v.findViewById(R.id.downFront);
-                    break;
-                case 3:
-                    currIcon = (ImageView) v.findViewById(R.id.leftFront);
-                    break;
-                case 4:
-                    currIcon = (ImageView) v.findViewById(R.id.tapFront);
-                    break;
-            }
+        switch (curr) {
+            case UP:
+                currIcon = (ImageView) v.findViewById(R.id.upFront);
+                break;
+            case RIGHT:
+                currIcon = (ImageView) v.findViewById(R.id.rightFront);
+                break;
+            case DOWN:
+                currIcon = (ImageView) v.findViewById(R.id.downFront);
+                break;
+            case LEFT:
+                currIcon = (ImageView) v.findViewById(R.id.leftFront);
+                break;
+            case TAP:
+                currIcon = (ImageView) v.findViewById(R.id.tapFront);
+                break;
         }
         currIcon.setVisibility(View.VISIBLE);
         return currIcon;
     }
 
-    private ImageView showNextIcon(int next, View v) {
+    private ImageView showNextIcon(GameGesture next, View v) {
         ImageView nextIcon = (ImageView) v.findViewById(R.id.upBack);
-        if(next >= 0 && next < numEvents) {
-            switch (next) {
-                case 0:
-                    nextIcon = (ImageView) v.findViewById(R.id.upBack);
-                    break;
-                case 1:
-                    nextIcon = (ImageView) v.findViewById(R.id.rightBack);
-                    break;
-                case 2:
-                    nextIcon = (ImageView) v.findViewById(R.id.downBack);
-                    break;
-                case 3:
-                    nextIcon = (ImageView) v.findViewById(R.id.leftBack);
-                    break;
-                case 4:
-                    nextIcon = (ImageView) v.findViewById(R.id.tapBack);
-                    break;
-            }
+        switch (next) {
+            case UP:
+                nextIcon = (ImageView) v.findViewById(R.id.upBack);
+                break;
+            case RIGHT:
+                nextIcon = (ImageView) v.findViewById(R.id.rightBack);
+                break;
+            case DOWN:
+                nextIcon = (ImageView) v.findViewById(R.id.downBack);
+                break;
+            case LEFT:
+                nextIcon = (ImageView) v.findViewById(R.id.leftBack);
+                break;
+            case TAP:
+                nextIcon = (ImageView) v.findViewById(R.id.tapBack);
+                break;
         }
         nextIcon.setVisibility(View.VISIBLE);
         return nextIcon;
     }
 
-    private void update() {
-        currEvent = nextEvent;
-        nextEvent = (int) (Math.random()*numEvents);
-        currIcon.setVisibility(View.INVISIBLE);
+    private Pair<ImageView, ImageView> updateIcons(Pair<GameGesture, GameGesture> p) {
+        currIcon.setVisibility(View.INVISIBLE); //TODO fade out
         nextIcon.setVisibility(View.INVISIBLE);
-        currIcon = showCurrIcon(currEvent, stub);
-        nextIcon = showNextIcon(nextEvent, stub);
-        score++;
-        scoreText.setText(score.toString());
+        currIcon = showCurrIcon(p.first, stub);
+        nextIcon = showNextIcon(p.second, stub);
+        return new Pair<ImageView, ImageView>(currIcon, nextIcon);
+    }
+
+    private TextView updateScore(int score) {
+        scoreText.setText(Integer.toString(score));
+        return scoreText;
+    }
+
+    private void update(Pair<GameGesture, GameGesture> p, int score) {
+        updateIcons(p);
+        updateScore(score);
+    }
+
+    public int gameOver(int score) {
+        //TODO show Game Over screen
+        return score;
     }
 }
 
