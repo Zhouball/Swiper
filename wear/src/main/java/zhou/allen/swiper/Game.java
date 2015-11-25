@@ -34,10 +34,11 @@ public class Game {
             currTimer.cancel();
         }
         if (mode == Gamemode.SURVIVAL) {
-            currTimer = new CountDownTimer((long)(1000.0 / Math.log((double)score)) + 250, 100) {
+            currTimer = new CountDownTimer((long)(1000.0 / Math.log((double)score + 1)) + 250, 10) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     //TODO indicate time running out in GameActivity
+                    gameActivity.updateScore((int)millisUntilFinished);
                 }
 
                 @Override
@@ -45,6 +46,7 @@ public class Game {
                     stop();
                 }
             };
+            currTimer.start();
         }
         return nextGesture();
     }

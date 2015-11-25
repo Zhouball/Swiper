@@ -197,7 +197,7 @@ public class GameActivity extends Activity {
         return new Pair<ImageView, ImageView>(currIcon, nextIcon);
     }
 
-    private TextView updateScore(int score) {
+    public TextView updateScore(int score) {
         scoreText.setText(Integer.toString(score));
         return scoreText;
     }
