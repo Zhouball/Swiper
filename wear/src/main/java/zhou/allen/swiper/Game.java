@@ -30,7 +30,9 @@ public class Game {
 
     public Pair<GameGesture, GameGesture> correct() {
         score++;
-        currTimer.cancel();
+        if (currTimer != null) {
+            currTimer.cancel();
+        }
         if (mode == Gamemode.SURVIVAL) {
             currTimer = new CountDownTimer((long)(1000.0 / Math.log((double)score)) + 250, 100) {
                 @Override
