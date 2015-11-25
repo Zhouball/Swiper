@@ -164,7 +164,7 @@ public class GameActivity extends Activity {
     }
 
     private ImageView showNextIcon(GameGesture next, View v) {
-        ImageView nextIcon = (ImageView) v.findViewById(R.id.upBack);
+        //ImageView nextIcon = (ImageView) v.findViewById(R.id.upBack);
         switch (next) {
             case UP:
                 nextIcon = (ImageView) v.findViewById(R.id.upBack);
