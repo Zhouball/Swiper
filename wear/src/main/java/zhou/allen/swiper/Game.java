@@ -9,12 +9,12 @@ import java.util.Random;
  * Created by Owner on 11/24/2015.
  */
 public class Game {
-    Activity gameActivity;
+    GameActivity gameActivity;
     Gamemode mode;
     int score = 0;
     GameGesture current, next;
 
-    public Game(Activity gA, Gamemode m) {
+    public Game(GameActivity gA, Gamemode m) {
         gameActivity = gA;
         mode = m;
     }
@@ -34,11 +34,18 @@ public class Game {
 
     public Pair<GameGesture, GameGesture> incorrect() {
         //TODO handle incorrect swipe here
+        if(mode == Gamemode.SURVIVAL)
+            return thisGesture();
+        else if(mode == Gamemode.TIMEATTACK) {
+            stop();
+            return thisGesture();
+        }
         return thisGesture();
     }
 
     public int stop() {
-        //TODO handle gameovers
+        //TODO handle gameover
+        gameActivity.gameOver(score);
         return score;
     }
 

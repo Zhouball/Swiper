@@ -1,7 +1,10 @@
 package zhou.allen.swiper;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.wearable.view.DismissOverlayView;
 import android.support.wearable.view.WatchViewStub;
 import android.util.Log;
@@ -33,7 +36,7 @@ public class GameActivity extends Activity {
         setContentView(R.layout.activity_game);
 
         gamemode = Gamemode.SURVIVAL; //SET Gamemode in SharedPreferences
-        final Game game = new Game(this, gamemode);
+        final Game game = new Game(GameActivity.this, gamemode);
 
         // Configure a gesture detector
         mDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
@@ -141,7 +144,6 @@ public class GameActivity extends Activity {
     }
 
     private ImageView showCurrIcon(GameGesture curr, View v) {
-        ImageView currIcon = (ImageView) v.findViewById(R.id.upFront);
         switch (curr) {
             case UP:
                 currIcon = (ImageView) v.findViewById(R.id.upFront);
@@ -164,7 +166,6 @@ public class GameActivity extends Activity {
     }
 
     private ImageView showNextIcon(GameGesture next, View v) {
-        ImageView nextIcon = (ImageView) v.findViewById(R.id.upBack);
         switch (next) {
             case UP:
                 nextIcon = (ImageView) v.findViewById(R.id.upBack);
@@ -189,8 +190,8 @@ public class GameActivity extends Activity {
     private Pair<ImageView, ImageView> updateIcons(Pair<GameGesture, GameGesture> p) {
         currIcon.setVisibility(View.INVISIBLE); //TODO fade out
         nextIcon.setVisibility(View.INVISIBLE);
-        currIcon = showCurrIcon(p.first, stub);
-        nextIcon = showNextIcon(p.second, stub);
+        showCurrIcon(p.first, stub);
+        showNextIcon(p.second, stub);
         return new Pair<ImageView, ImageView>(currIcon, nextIcon);
     }
 
@@ -204,9 +205,19 @@ public class GameActivity extends Activity {
         updateScore(score);
     }
 
-    public int gameOver(int score) {
+    public void gameOver(int score) {
         //TODO show Game Over screen
-        return score;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        int highScore = prefs.getInt("highscore", 0);
+        Intent i = new Intent(this, GameOverActivity.class);
+        i.putExtra("score", score);
+        i.putExtra("highscore", highScore);
+        if(score > highScore) {
+            SharedPreferences.Editor editPrefs = prefs.edit();
+            editPrefs.putInt("highscore", score);
+        }
+        startActivity(i);
+        finish();
     }
 }
 
