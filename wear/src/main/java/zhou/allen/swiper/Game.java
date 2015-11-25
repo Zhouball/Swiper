@@ -22,7 +22,19 @@ public class Game {
     }
 
     public Pair<GameGesture, GameGesture> start() {
-        //TODO start timers
+        if (mode == Gamemode.TIMEATTACK) {
+            CountDownTimer timer = new CountDownTimer(60000, 100) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    //TODO indicate time running out in GameActivity
+                }
+
+                @Override
+                public void onFinish() {
+                    stop();
+                }
+            };
+        }
         current = getNextGesture();
         next = getNextGesture();
         return new Pair<GameGesture, GameGesture>(current, next);
@@ -47,6 +59,9 @@ public class Game {
                 }
             };
             currTimer.start();
+        }
+        else if (mode == Gamemode.TIMEATTACK) {
+
         }
         return nextGesture();
     }
