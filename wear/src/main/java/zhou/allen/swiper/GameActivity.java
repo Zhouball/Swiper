@@ -207,6 +207,11 @@ public class GameActivity extends Activity {
         updateScore(score);
     }
 
+    public TextView updateTime(int timeLeft) {
+        //TODO: implement this function (make a bar that decreases on the side?...)
+        return null;
+    }
+
     public void gameOver(int score) {
         //TODO show Game Over screen
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -217,6 +222,7 @@ public class GameActivity extends Activity {
         if(score > highScore) {
             SharedPreferences.Editor editPrefs = prefs.edit();
             editPrefs.putInt("highscore", score);
+            editPrefs.commit();
         }
         startActivity(i);
         finish();

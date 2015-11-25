@@ -50,7 +50,7 @@ public class Game {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     //TODO indicate time running out in GameActivity
-                    gameActivity.updateScore((int)millisUntilFinished);
+                    gameActivity.updateTime((int)millisUntilFinished);
                 }
 
                 @Override
