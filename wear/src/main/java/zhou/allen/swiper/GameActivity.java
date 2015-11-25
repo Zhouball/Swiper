@@ -123,16 +123,16 @@ public class GameActivity extends Activity {
             public void onLayoutInflated(WatchViewStub stub) {
                 scoreText = (TextView) stub.findViewById(R.id.scoreText);
 
+                //Start the game
+                Pair<GameGesture, GameGesture> startPair = game.start();
+                update(startPair, game.getScore());
+
                 // Obtain the DismissOverlayView element
                 mDismissOverlay = (DismissOverlayView) stub.findViewById(R.id.dismiss_overlay);
                 mDismissOverlay.setIntroText("Long Press to close");
                 mDismissOverlay.showIntroIfNecessary();
             }
         });
-
-        //Start the game
-        Pair<GameGesture, GameGesture> startPair = game.start();
-        update(startPair, game.getScore());
     }
 
     @Override
@@ -141,7 +141,7 @@ public class GameActivity extends Activity {
     }
 
     private ImageView showCurrIcon(GameGesture curr, View v) {
-        ImageView currIcon = (ImageView) v.findViewById(R.id.upFront);
+        //ImageView currIcon = (ImageView) v.findViewById(R.id.upFront);
         switch (curr) {
             case UP:
                 currIcon = (ImageView) v.findViewById(R.id.upFront);
@@ -187,8 +187,10 @@ public class GameActivity extends Activity {
     }
 
     private Pair<ImageView, ImageView> updateIcons(Pair<GameGesture, GameGesture> p) {
-        currIcon.setVisibility(View.INVISIBLE); //TODO fade out
-        nextIcon.setVisibility(View.INVISIBLE);
+        if (currIcon != null && nextIcon != null) {
+            currIcon.setVisibility(View.INVISIBLE); //TODO fade out
+            nextIcon.setVisibility(View.INVISIBLE);
+        }
         currIcon = showCurrIcon(p.first, stub);
         nextIcon = showNextIcon(p.second, stub);
         return new Pair<ImageView, ImageView>(currIcon, nextIcon);

@@ -1,6 +1,7 @@
 package zhou.allen.swiper;
 
 import android.app.Activity;
+import android.os.CountDownTimer;
 import android.util.Pair;
 
 import java.util.Random;
@@ -9,12 +10,13 @@ import java.util.Random;
  * Created by Owner on 11/24/2015.
  */
 public class Game {
-    Activity gameActivity;
+    GameActivity gameActivity;
     Gamemode mode;
     int score = 0;
     GameGesture current, next;
+    CountDownTimer currTimer;
 
-    public Game(Activity gA, Gamemode m) {
+    public Game(GameActivity gA, Gamemode m) {
         gameActivity = gA;
         mode = m;
     }
@@ -27,8 +29,21 @@ public class Game {
     }
 
     public Pair<GameGesture, GameGesture> correct() {
-        //TODO reset timers or whatever
         score++;
+        currTimer.cancel();
+        if (mode == Gamemode.SURVIVAL) {
+            currTimer = new CountDownTimer((long)(1000.0 / Math.log((double)score)) + 250, 100) {
+                @Override
+                public void onTick(long millisUntilFinished) {
+                    //TODO indicate time running out in GameActivity
+                }
+
+                @Override
+                public void onFinish() {
+                    stop();
+                }
+            };
+        }
         return nextGesture();
     }
 
