@@ -24,10 +24,12 @@ public class Game {
 
     public Pair<GameGesture, GameGesture> start() {
         if (mode == Gamemode.TIMEATTACK) {
-            CountDownTimer timer = new CountDownTimer(60000, 100) {
+            final long maxTime = 600000;
+            CountDownTimer timer = new CountDownTimer(maxTime, 100) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    //TODO indicate time running out in GameActivity
+                    //TODO indicate time running out in GameActivity\
+                    gameActivity.updateTime((int)millisUntilFinished, (int)maxTime);
                 }
 
                 @Override
