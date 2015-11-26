@@ -2,6 +2,7 @@ package zhou.allen.swiper;
 
 import android.app.Activity;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.util.Pair;
 
 import java.util.Random;
@@ -34,11 +35,12 @@ public class Game {
             currTimer.cancel();
         }
         if (mode == Gamemode.SURVIVAL) {
-            currTimer = new CountDownTimer((long)(1000.0 / Math.log((double)score + 1)) + 250, 10) {
+            final long maxTime = (long)(1000.0 / Math.log((double)(score/4) + 2)) + 250;
+            currTimer = new CountDownTimer(maxTime, 10) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     //TODO indicate time running out in GameActivity
-                    gameActivity.updateTime((int)millisUntilFinished);
+                    gameActivity.updateTime((int)millisUntilFinished, (int) maxTime);
                 }
 
                 @Override
@@ -64,7 +66,7 @@ public class Game {
 
     public int stop() {
         //TODO handle gameover
-        gameActivity.gameOver(score);
+        gameActivity.gameOver(score, mode);
         return score;
     }
 
