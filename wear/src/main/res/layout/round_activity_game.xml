@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="zhou.allen.swiper.GameActivity"
+    tools:deviceIds="wear_round"
+    android:background="#f9f9f9">
+
+    <android.support.wearable.view.DismissOverlayView
+        android:id="@+id/dismiss_overlay"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"/>
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/upBack"
+        android:background="@drawable/up"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:visibility="invisible"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:alpha="0.7" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/downBack"
+        android:background="@drawable/down"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:visibility="invisible"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:alpha="0.7" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/leftBack"
+        android:background="@drawable/left"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:visibility="invisible"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:alpha="0.7" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/rightBack"
+        android:background="@drawable/right"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:visibility="invisible"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:alpha="0.7" />
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/tapBack"
+        android:background="@drawable/tap"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:visibility="invisible"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:alpha="0.7" />
+
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/upFront"
+        android:background="@drawable/up"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/downFront"
+        android:background="@drawable/down"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/leftFront"
+        android:background="@drawable/left"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/rightFront"
+        android:background="@drawable/right"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:id="@+id/tapFront"
+        android:background="@drawable/tap"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/scoreText"
+        android:text="0"
+        android:textSize="35sp"
+        android:textColor="#000000"
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="20dp"
+        android:layout_height="150dip"
+        style="@style/Widget.ProgressBar.Vertical"
+        android:paddingLeft="10dp"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/upFront" />
+</RelativeLayout>
