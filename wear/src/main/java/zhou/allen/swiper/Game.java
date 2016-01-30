@@ -23,21 +23,6 @@ public class Game {
     }
 
     public Pair<GameGesture, GameGesture> start() {
-        if (mode == Gamemode.TIMEATTACK) {
-            final long maxTime = 600000;
-            CountDownTimer timer = new CountDownTimer(maxTime, 100) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    //TODO indicate time running out in GameActivity\
-                    gameActivity.updateTime((int)millisUntilFinished, (int)maxTime);
-                }
-
-                @Override
-                public void onFinish() {
-                    stop();
-                }
-            };
-        }
         current = getNextGesture();
         next = getNextGesture();
         return new Pair<GameGesture, GameGesture>(current, next);
@@ -45,10 +30,10 @@ public class Game {
 
     public Pair<GameGesture, GameGesture> correct() {
         score++;
-        if (currTimer != null) {
-            currTimer.cancel();
-        }
         if (mode == Gamemode.SURVIVAL) {
+            if (currTimer != null) {
+                currTimer.cancel();
+            }
             final long maxTime = (long)(1000.0 / Math.log((double)(score/4) + 2)) + 250;
             currTimer = new CountDownTimer(maxTime, 10) {
                 @Override
@@ -65,16 +50,32 @@ public class Game {
             currTimer.start();
         }
         else if (mode == Gamemode.TIMEATTACK) {
+            if (score == 1) {
+                final long maxTime = 60000;
+                currTimer = new CountDownTimer(maxTime, 1000) {
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        //TODO indicate time running out in GameActivity
+                        gameActivity.updateTime((int)millisUntilFinished, (int)maxTime);
+                    }
 
+                    @Override
+                    public void onFinish() {
+                        stop();
+                    }
+                };
+                currTimer.start();
+            }
         }
         return nextGesture();
     }
 
     public Pair<GameGesture, GameGesture> incorrect() {
         //TODO handle incorrect swipe here
-        if(mode == Gamemode.SURVIVAL)
+        if(mode == Gamemode.SURVIVAL) {
+            stop();
             return thisGesture();
-        else if(mode == Gamemode.TIMEATTACK) {
+        } else if(mode == Gamemode.TIMEATTACK) {
             stop();
             return thisGesture();
         }

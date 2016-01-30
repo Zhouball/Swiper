@@ -8,6 +8,7 @@ package zhou.allen.swiper;
  *
  * -base-game
  * TODO: Get the different moves to cycle (make a random list of each swipe, if correct swipe detected, move to next command)
+ * TODO: Separate high scores for different gamemodes
  *
  * -mechanics
  * TODO: -Swiping, Taps, Gestures, Motions
