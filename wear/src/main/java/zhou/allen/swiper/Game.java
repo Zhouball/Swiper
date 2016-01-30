@@ -97,7 +97,7 @@ public class Game {
 
     public GameGesture getNextGesture() {
         GameGesture gg;
-        int rn = new Random().nextInt(4); //TODO depends on gamemode
+        int rn = new Random().nextInt(5); //TODO depends on gamemode
         switch (rn) {
             case 0: gg = GameGesture.UP; break;
             case 1: gg = GameGesture.DOWN; break;
