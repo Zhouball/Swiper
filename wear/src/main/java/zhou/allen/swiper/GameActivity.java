@@ -35,7 +35,7 @@ public class GameActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
-        gamemode = Gamemode.SURVIVAL; //SET Gamemode in SharedPreferences
+        gamemode = Gamemode.TIMEATTACK; //SET Gamemode in SharedPreferences
         final Game game = new Game(GameActivity.this, gamemode);
 
         // Configure a gesture detector
@@ -140,6 +140,7 @@ public class GameActivity extends Activity {
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
+
         return mDetector.onTouchEvent(ev) || super.onTouchEvent(ev);
     }
 
