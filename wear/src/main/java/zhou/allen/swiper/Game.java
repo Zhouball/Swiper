@@ -2,6 +2,7 @@ package zhou.allen.swiper;
 
 import android.app.Activity;
 import android.os.CountDownTimer;
+import android.util.Log;
 import android.util.Pair;
 
 import java.util.Random;
@@ -23,10 +24,12 @@ public class Game {
 
     public Pair<GameGesture, GameGesture> start() {
         if (mode == Gamemode.TIMEATTACK) {
-            CountDownTimer timer = new CountDownTimer(60000, 100) {
+            final long maxTime = 600000;
+            CountDownTimer timer = new CountDownTimer(maxTime, 100) {
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    //TODO indicate time running out in GameActivity
+                    //TODO indicate time running out in GameActivity\
+                    gameActivity.updateTime((int)millisUntilFinished, (int)maxTime);
                 }
 
                 @Override
@@ -46,11 +49,12 @@ public class Game {
             currTimer.cancel();
         }
         if (mode == Gamemode.SURVIVAL) {
-            currTimer = new CountDownTimer((long)(1000.0 / Math.log((double)score + 1)) + 250, 10) {
+            final long maxTime = (long)(1000.0 / Math.log((double)(score/4) + 2)) + 250;
+            currTimer = new CountDownTimer(maxTime, 10) {
                 @Override
                 public void onTick(long millisUntilFinished) {
                     //TODO indicate time running out in GameActivity
-                    gameActivity.updateTime((int)millisUntilFinished);
+                    gameActivity.updateTime((int)millisUntilFinished, (int) maxTime);
                 }
 
                 @Override
@@ -79,7 +83,7 @@ public class Game {
 
     public int stop() {
         //TODO handle gameover
-        gameActivity.gameOver(score);
+        gameActivity.gameOver(score, mode);
         return score;
     }
 
@@ -93,7 +97,7 @@ public class Game {
 
     public GameGesture getNextGesture() {
         GameGesture gg;
-        int rn = new Random().nextInt(4); //TODO depends on gamemode
+        int rn = new Random().nextInt(5); //TODO depends on gamemode
         switch (rn) {
             case 0: gg = GameGesture.UP; break;
             case 1: gg = GameGesture.DOWN; break;

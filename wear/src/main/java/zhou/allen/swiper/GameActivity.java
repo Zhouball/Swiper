@@ -13,6 +13,7 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -29,6 +30,7 @@ public class GameActivity extends Activity {
 
     private DismissOverlayView mDismissOverlay;
     private GestureDetector mDetector;
+    private ProgressBar pb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +136,10 @@ public class GameActivity extends Activity {
                 mDismissOverlay = (DismissOverlayView) stub.findViewById(R.id.dismiss_overlay);
                 mDismissOverlay.setIntroText("Long Press to close");
                 mDismissOverlay.showIntroIfNecessary();
+
+                pb = (ProgressBar) findViewById(R.id.progress);
+                if(gamemode==Gamemode.SURVIVAL) pb.setMax(1250);
+                if(gamemode==Gamemode.TIMEATTACK) pb.setMax(60000);
             }
         });
     }
@@ -208,21 +214,28 @@ public class GameActivity extends Activity {
         updateScore(score);
     }
 
-    public TextView updateTime(int timeLeft) {
+    public void updateTime(int timeLeft, int maxTime) {
         //TODO: implement this function (make a bar that decreases on the side?...)
-        return null;
+        pb.setMax(maxTime);
+        if(timeLeft < maxTime/3) {
+            pb.setProgress(0);
+            pb.setSecondaryProgress(timeLeft);
+        } else {
+            pb.setSecondaryProgress(0);
+            pb.setProgress(timeLeft);
+        }
     }
 
-    public void gameOver(int score) {
+    public void gameOver(int score, Gamemode mode) {
         //TODO show Game Over screen
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        int highScore = prefs.getInt("highscore", 0);
+        int highScore = prefs.getInt("highscore"+mode, 0);
         Intent i = new Intent(this, GameOverActivity.class);
         i.putExtra("score", score);
         i.putExtra("highscore", highScore);
         if(score > highScore) {
             SharedPreferences.Editor editPrefs = prefs.edit();
-            editPrefs.putInt("highscore", score);
+            editPrefs.putInt("highscore"+mode, score);
             editPrefs.commit();
         }
         startActivity(i);

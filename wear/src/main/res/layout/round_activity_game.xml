@@ -17,55 +17,55 @@
         android:layout_height="100dp"
         android:id="@+id/upBack"
         android:background="@drawable/up"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:visibility="invisible"
-        android:layout_marginBottom="100dp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:alpha="0.7" />
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/downBack"
         android:background="@drawable/down"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:visibility="invisible"
-        android:layout_marginBottom="100dp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:alpha="0.7" />
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/leftBack"
         android:background="@drawable/left"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:visibility="invisible"
-        android:layout_marginBottom="100dp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:alpha="0.7" />
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/rightBack"
         android:background="@drawable/right"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:visibility="invisible"
-        android:layout_marginBottom="100dp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:alpha="0.7" />
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/tapBack"
         android:background="@drawable/tap"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:visibility="invisible"
-        android:layout_marginBottom="100dp"
-        android:layout_marginLeft="100dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:alpha="0.7" />
 
 
@@ -114,9 +114,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/scoreText"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:text="0"
         android:textSize="35sp"
-        android:textColor="#000000"/>
+        android:textColor="#000000"
+        android:paddingBottom="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <ProgressBar
+        android:id="@+id/progress"
+        android:layout_width="20dp"
+        android:layout_height="150dip"
+        style="@style/Widget.ProgressBar.Vertical"
+        android:paddingLeft="10dp"
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/upFront" />
 </RelativeLayout>
